@@ -29,7 +29,7 @@ full_food[:meal]       = t.meal
 full_food[:processed]  = t.processed
 
 get '/' do
-  @title = "添加物濃度"
+  @title = "添加物暴露量計算表"
   erb :index
 end
 
