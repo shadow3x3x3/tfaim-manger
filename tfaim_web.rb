@@ -33,6 +33,29 @@ get '/' do
   erb :index
 end
 
+get '/user-choice' do
+  erb :"choice/user_choice"
+end
+
+get '/manager-choice' do
+  erb :"choice/manager_choice"
+end
+
+get '/calc' do
+  erb :"calc/tfaim_calc"
+end
+
+# Manager
+get '/manager/user' do
+  @title = "管理使用者"
+  erb :"manager/user"
+end
+
+get '/manager/data' do
+  @title = "管理數據資料"
+  erb :"manager/data"
+end
+
 post '/food_concentration' do
   @full_food  = full_food
   @title      = '輸入各類食物所含濃度'
