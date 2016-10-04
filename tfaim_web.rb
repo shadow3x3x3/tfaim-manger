@@ -44,6 +44,14 @@ get '/intro' do
   erb :intro
 end
 
+get '/user_login' do
+  erb :"login/user_login"
+end
+
+get '/manager_login' do
+  erb :"login/manager_login"
+end
+
 get '/user-choice' do
   erb :"choice/user_choice"
 end
