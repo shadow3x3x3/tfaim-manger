@@ -48,16 +48,8 @@ get '/user_login' do
   erb :"login/user_login"
 end
 
-get '/manager_login' do
-  erb :"login/manager_login"
-end
-
-get '/user-choice' do
-  erb :"choice/user_choice"
-end
-
-get '/manager-choice' do
-  erb :"choice/manager_choice"
+get '/user_choice' do
+  erb :"user/user_choice"
 end
 
 get '/calc' do
@@ -65,6 +57,14 @@ get '/calc' do
 end
 
 # Manager
+get '/manager_login' do
+  erb :"login/manager_login"
+end
+
+get '/manager_choice' do
+  erb :"manager/manager_choice"
+end
+
 get '/manager/user' do
   @title = "管理使用者"
   erb :"manager/user"
