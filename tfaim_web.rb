@@ -1,8 +1,15 @@
 # coding: utf-8
 require 'sinatra'
+require 'sinatra/reloader'
 require 'tilt/erb'
 require 'pry'
+
+Dir[File.dirname(__FILE__) + '/Model/*'].each { |file| require_relative file }
+require_relative 'database'
+
 require_relative 'tfaim'
+
+# set :database, "mysql2://#{DataBase::UserName}:#{DataBase::Password}@#{DataBase::Host}:#{DataBase::Port}/#{DataBase::Name}"
 
 Choices = { 'Benzoic_cid' => '苯甲酸' }.freeze
 Kind    = { 'Benzoic_cid' => 5 }.freeze
@@ -31,6 +38,10 @@ full_food[:processed]  = t.processed
 get '/' do
   @title = "添加物暴露量計算表"
   erb :index
+end
+
+get '/intro' do
+  erb :intro
 end
 
 get '/user-choice' do
