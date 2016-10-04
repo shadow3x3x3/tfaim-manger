@@ -14,16 +14,11 @@
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/plugins/morris.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <style rel="stylesheet/css">
         .navbar-inverse {
@@ -33,32 +28,30 @@
 </head>
 
 <body>
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Taiwan Food Additive Intake Model</a>
-            </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="/"><i class="glyphicon glyphicon-info-sign"></i> TFAIM 簡介</a>
-                    </li>
-                    <li>
-                        <a href="/intro"><i class="glyphicon glyphicon-question-sign"></i> 使用說明</a>
-                    </li>
-                    <li>
-                        <a href="/user_login"><i class="glyphicon glyphicon-user"></i> 使用者登入</a>
-                    </li>
-                    <li>
-                        <a href="/manager_login"><i class="glyphicon glyphicon-cog"></i> 管理者登入</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
-        <%= yield %>
-
+  <div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Taiwan Food Additive Intake Model</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav side-nav">
+          <li>
+            <a href="/"><i class="glyphicon glyphicon-info-sign"></i> TFAIM 簡介</a>
+          </li>
+          <li>
+            <a href="/intro"><i class="glyphicon glyphicon-question-sign"></i> 使用說明</a>
+          </li>
+          <li>
+            <a href="/user_login"><i class="glyphicon glyphicon-user"></i> 使用者登入</a>
+          </li>
+          <li>
+            <a href="/manager_login"><i class="glyphicon glyphicon-cog"></i> 管理者登入</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <%= yield %>
+  </div>
 </body>
