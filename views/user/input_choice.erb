@@ -1,0 +1,26 @@
+<style>
+.container-fluid {
+  width: 400px;
+  margin: 0 auto;
+}
+</style>
+
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <h1>輸入資料方式</h1>
+    <form action='food_concentration' method='post'>
+      <li>
+        <label class='radio'>
+          <input type='radio' name='kind' value='single' id='single' checked="ture"/>
+          手動輸入
+        </label>
+        <label class='radio'>
+          <input type='radio' name='kind' value='single' id='single'/>
+          匯入Excel
+        </label>
+      </li>
+      <a href="/user_choice" class="btn btn-info">上一步</a>
+      <button type="submit" class="btn btn-primary">下一步</button>
+    </form>
+  </div>
+</div>
