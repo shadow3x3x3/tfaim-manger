@@ -45,7 +45,6 @@ get '/intro' do
 end
 
 # User
-
 get '/user_login' do
   erb :"login/user_login"
 end
@@ -54,12 +53,16 @@ get '/user_choice' do
   erb :"user/user_choice"
 end
 
-post '/input_choice' do
+get '/input_choice' do
   erb :"user/input_choice"
 end
 
 get '/calc' do
   erb :"calc/tfaim_calc"
+end
+
+get '/food_choice' do
+  erb :"user/food_choice"
 end
 
 # Manager
