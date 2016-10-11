@@ -7,34 +7,17 @@ require 'pry'
 Dir[File.dirname(__FILE__) + '/Model/*'].each { |file| require_relative file }
 require_relative 'database'
 
-require_relative 'tfaim'
+require_relative 'src/tfaim'
 
 # set :database, "mysql2://#{DataBase::UserName}:#{DataBase::Password}@#{DataBase::Host}:#{DataBase::Port}/#{DataBase::Name}"
 
-Choices = { 'Benzoic_cid' => '苯甲酸' }.freeze
-Kind    = { 'Benzoic_cid' => 5 }.freeze
-t = Tfaim.new
-full_food = {}
-full_food[:milk]       = t.milk
-full_food[:cream]      = t.cream
-full_food[:ice]        = t.ice
-full_food[:veg_fru]    = t.veg_fru
-full_food[:fruit]      = t.fruit
-full_food[:vegetable]  = t.vegetable
-full_food[:dessert]    = t.dessert
-full_food[:grain]      = t.grain
-full_food[:baking]     = t.baking
-full_food[:meat]       = t.meat
-full_food[:seafood]    = t.seafood
-full_food[:egg]        = t.egg
-full_food[:sweat]      = t.sweat
-full_food[:seasoning]  = t.seasoning
-full_food[:nutritious] = t.nutritious
-full_food[:drink]      = t.drink
-full_food[:snack]      = t.snack
-full_food[:meal]       = t.meal
-full_food[:processed]  = t.processed
+before do
+  @tfaim = Tfaim.new
+  @full_food = {}
+  setting_full_food
+end
 
+# Routing
 get '/' do
   @title = "添加物暴露量計算表"
   erb :index
@@ -44,7 +27,7 @@ get '/intro' do
   erb :intro
 end
 
-# User
+# User Controller
 get '/user_login' do
   erb :"login/user_login"
 end
@@ -65,7 +48,12 @@ get '/food_choice' do
   erb :"user/food_choice"
 end
 
-# Manager
+post '/food_forms' do
+  @food_list = @full_food[params["food-kind"].to_sym]
+  erb :"user/food_forms"
+end
+
+# Manager Controller
 get '/manager_login' do
   erb :"login/manager_login"
 end
@@ -88,12 +76,12 @@ post '/food_concentration' do
   @full_food  = full_food
   @title      = '輸入各類食物所含濃度'
   @kind       = params['kind']
-  t.additives = @kind
+  @tfaim.additives = @kind
   erb :food_concentration
 end
 
 post '/food_concentration/result' do
-  t.concentration = take_input(params)
+  @tfaim.concentration = take_input(params)
   @title  = '計算結果'
   @result = t.additives
   erb :result, layout: :result_layout
@@ -157,6 +145,26 @@ get '/food_concentration/result/:type' do
     @params = calc_ADI(params_baby, params_kid, params_child, params_teenager, params_adult, params_older, params_elder)
     erb :ADI, layout: :result_layout
   end
+end
+
+def setting_full_food
+  @full_food[:milk]       = @tfaim.milk
+  @full_food[:cream]      = @tfaim.cream
+  @full_food[:ice]        = @tfaim.ice
+  @full_food[:vegetable]  = @tfaim.vegetable
+  @full_food[:dessert]    = @tfaim.dessert
+  @full_food[:grain]      = @tfaim.grain
+  @full_food[:baking]     = @tfaim.baking
+  @full_food[:meat]       = @tfaim.meat
+  @full_food[:seafood]    = @tfaim.seafood
+  @full_food[:egg]        = @tfaim.egg
+  @full_food[:sweat]      = @tfaim.sweat
+  @full_food[:seasoning]  = @tfaim.seasoning
+  @full_food[:nutritious] = @tfaim.nutritious
+  @full_food[:drink]      = @tfaim.drink
+  @full_food[:snack]      = @tfaim.snack
+  @full_food[:meal]       = @tfaim.meal
+  @full_food[:processed]  = @tfaim.processed
 end
 
 def calc_baby(t)

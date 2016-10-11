@@ -1,0 +1,39 @@
+<style>
+.container-fluid {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.foods-form {
+  font-size: 20px;
+}
+
+input[type=checkbox] {
+  width: 20px;
+  height: 15px;
+}
+</style>
+
+
+<% times = 0 %>
+<div id="page-wrapper">
+  <div class="container">
+    <h1>選擇食品種類</h1>
+    <form action="/" class="form foods-form" method="post" role="form">
+      <div class="form-group">
+        <% @food_list.each_with_index do |list, index| %>
+          <div class="col-md-8 checkbox">
+            <input type="checkbox" class><%= list %>
+          </div>
+          <div class="col-md-4">
+            <input type="number" min=0 name="<%= "#{times += 1}_#{index + 1}" %>" class="form-control" id="<%= list %>" step="0.01">    
+          </div>
+        <% end %>
+        <div class="col-md-8">
+          <a href="/food_choice" class="btn btn-info">上一步</a>
+          <button type="submit" class="btn btn-primary">下一步</button>  
+        </div>
+      </div>
+    </form> 
+  </div>
+</div>
