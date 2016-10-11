@@ -53,6 +53,10 @@ post '/food_forms' do
   erb :"user/food_forms"
 end
 
+get '/food_upload' do
+  erb :"user/food_upload"
+end
+
 # Manager Controller
 get '/manager_login' do
   erb :"login/manager_login"

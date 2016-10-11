@@ -1,0 +1,47 @@
+<style>
+.container-fluid {
+  width: 400px;
+  margin: 0 auto;
+}
+</style>
+
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <h1>匯入資料</h1>
+    <form action="/" class="form foods-form" method="post" role="form">
+      <div class="input-group">
+        <label class="input-group-btn">
+          <span class="btn btn-primary">
+          選擇要上傳的檔案 <input type="file" style="display: none;">
+          </span>
+        </label>
+        <input type="text" class="form-control" readonly>
+      </div>
+    </form> 
+  </div>
+</div>
+
+<script>
+  $(function() {
+
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  $(document).ready( function() {
+    $(':file').on('fileselect', function(event, numFiles, label) {
+      var input = $(this).parents('.input-group').find(':text'),
+          log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+      if( input.length ) {
+        input.val(log);
+      } else {
+        if(log) alert(log);
+      }
+    });
+  });
+});
+</script>
