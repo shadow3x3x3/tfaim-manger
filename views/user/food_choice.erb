@@ -8,7 +8,7 @@
   font-size: 20px;
 }
 
-input[type=checkbox] {
+input[type=radio] {
   width: 15px;
   height: 15px;
   margin: 3px;
@@ -18,10 +18,26 @@ input[type=checkbox] {
 
 <div id="page-wrapper">
   <div class="container-fluid">
+    <h1>選擇食品種類</h1>
     <form action="/" class="foods-form">
-      <input type="checkbox" value="1.0">乳及乳製品<br>
-      <input type="checkbox" value="2.0">脂肪、油及乳化脂肪製品<br>
-      <input type="submit" value="Submit"  class="btn btn-primary">
+      <input type="radio" name="food-kind" value="1">1.乳及乳製品<br>
+      <input type="radio" name="food-kind" value="2">2.脂肪、油及乳化脂肪製品<br>
+      <input type="radio" name="food-kind" value="3">3.食用冰品<br>
+      <input type="radio" name="food-kind" value="4">4.蔬菜及水果類<br>
+      <input type="radio" name="food-kind" value="5">5.糖果及甜點類<br>
+      <input type="radio" name="food-kind" value="6">6.穀類、塊根、塊莖<br>
+      <input type="radio" name="food-kind" value="7">7.烘焙食品<br>
+      <input type="radio" name="food-kind" value="8">8.肉類及其相關製品<br>
+      <input type="radio" name="food-kind" value="9">9.水產及其製品<br>
+      <input type="radio" name="food-kind" value="10">10.蛋及蛋製品<br>
+      <input type="radio" name="food-kind" value="11">11.甜味料，包括蜂蜜<br>
+      <input type="radio" name="food-kind" value="12">12.調味品<br>
+      <input type="radio" name="food-kind" value="13">13.特定營養需求食品<br>
+      <input type="radio" name="food-kind" value="14">14.飲料類<br>
+      <input type="radio" name="food-kind" value="15">15.休閒食品<br>
+      <input type="radio" name="food-kind" value="16">16.膳食補充品<br>
+      <input type="radio" name="food-kind" value="17">17.其他加工食品<br>
+      <button type="submit" class="btn btn-primary">下一步</button>
     </form> 
   </div>
 </div>
