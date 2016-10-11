@@ -24,10 +24,10 @@ input[type=checkbox] {
         <% @food_list.each_with_index do |list, index| %>
         <div class="row">
           <div class="col-md-6 checkbox">
-            <input type="checkbox" class><%= list %>
+            <input type="checkbox" class="food-check" id="<%= index %>"><%= list %>
           </div>
           <div class="col-md-4">
-            <input type="number" min=0 name="<%= "#{times += 1}_#{index + 1}" %>" class="form-control" id="<%= list %>" step="0.01">    
+            <input type="number" value="0" min=0 name="<%= "#{times += 1}_#{index + 1}" %>" class="form-control" id="<%= index %>-input" disabled="disabled" step="0.01">    
           </div>
         </div>
         <% end %>
@@ -39,3 +39,14 @@ input[type=checkbox] {
     </form> 
   </div>
 </div>
+
+<script type="text/javascript">
+$(".food-check").click(function () {
+  input_id = "#" + this.id + "-input"
+  if (this.checked) {
+    $(input_id).prop('disabled', false).focus();
+  } else {
+    $(input_id).prop('disabled', true).val("0");
+  }
+});
+</script>
