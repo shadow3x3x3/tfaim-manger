@@ -48,6 +48,10 @@ get '/food_choice' do
   erb :"user/food_choice"
 end
 
+post '/result' do
+  erb :"user/result"
+end
+
 post '/food_forms' do
   @food_list = @full_food[params["food-kind"].to_sym]
   erb :"user/food_forms"
