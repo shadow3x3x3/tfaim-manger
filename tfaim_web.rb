@@ -32,8 +32,8 @@ get '/user_login' do
   erb :"login/user_login"
 end
 
-get '/user_choice' do
-  erb :"user/user_choice"
+get '/choice' do
+  erb :"user/choice"
 end
 
 get '/input_choice' do
