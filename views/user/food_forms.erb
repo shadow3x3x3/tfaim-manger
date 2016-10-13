@@ -26,13 +26,14 @@ input[type=checkbox] {
             <input type="checkbox" class="food-check" id="<%= index %>"><%= list %>
           </div>
           <div class="col-md-4">
-            <input type="number" value="0" min=0 name="<%= "#{index}" %>" class="form-control" id="<%= index %>-input" disabled="disabled" step="0.01">    
+            <input type="number" value="0" min=0 name="<%= index %>" class="form-control" id="<%= index %>-input" disabled="disabled" step="0.01">    
           </div>
         </div>
         <% end %>
         <div class="col-md-8">
           <a href="/food_choice" class="btn btn-info">上一步</a>
-          <button type="submit" class="btn btn-primary">下一步</button>  
+          <button type="submit" class="btn btn-primary">下一步</button> 
+          <input type="hidden" name="food-kind" value="<%= @food_kind %>"> 
         </div>
       </div>
     </form> 
