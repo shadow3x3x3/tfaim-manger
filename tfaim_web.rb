@@ -11,10 +11,13 @@ require_relative 'src/tfaim'
 
 # set :database, "mysql2://#{DataBase::UserName}:#{DataBase::Password}@#{DataBase::Host}:#{DataBase::Port}/#{DataBase::Name}"
 
+configure do
+  set :food_input, {}
+end
+
 before do
   @tfaim = Tfaim.new
   @full_food = {}
-  @food_input = {}
   setting_full_food
 end
 
@@ -38,6 +41,7 @@ get '/choice' do
 end
 
 get '/input_choice' do
+  puts settings.food_input.clear
   erb :"user/input_choice"
 end
 
@@ -56,6 +60,8 @@ post '/food_forms' do
 end
 
 post '/result' do
+  input_collector(params)
+  p settings.food_input
   redirect "/food_choice" if params["subject"] == "rechoose"
   erb :"user/result"
 end
@@ -176,6 +182,17 @@ def setting_full_food
   @full_food[:snack]      = @tfaim.snack
   @full_food[:meal]       = @tfaim.meal
   @full_food[:processed]  = @tfaim.processed
+end
+
+def input_collector(params)
+  food_name = params["food-kind"].to_sym
+  settings.food_input[food_name] = []
+
+  food_size = @full_food[food_name].size
+
+  ("0"...food_size.to_s).each do |index|
+    settings.food_input[food_name] << params[index]
+  end
 end
 
 def calc_baby(t)
