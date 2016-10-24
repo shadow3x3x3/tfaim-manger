@@ -30,7 +30,8 @@ input[type=checkbox] {
         <% end %>
         <div class="col-md-8">
           <a href="/food_choice" class="btn btn-info">上一步</a>
-          <button type="submit" class="btn btn-primary">下一步</button> 
+          <button type="submit" class="btn btn-primary" name="subject" value="rechoose">繼續選擇</button>           
+          <button type="submit" class="btn btn-primary" name="subject" value="next">完成</button> 
           <input type="hidden" name="food-kind" value="<%= @food_kind %>"> 
         </div>
       </div>

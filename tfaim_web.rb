@@ -14,6 +14,7 @@ require_relative 'src/tfaim'
 before do
   @tfaim = Tfaim.new
   @full_food = {}
+  @food_input = {}
   setting_full_food
 end
 
@@ -49,11 +50,13 @@ get '/food_choice' do
 end
 
 post '/food_forms' do
+  @food_kind = params["food-kind"]
   @food_list = @full_food[params["food-kind"].to_sym]
   erb :"user/food_forms"
 end
 
 post '/result' do
+  redirect "/food_choice" if params["subject"] == "rechoose"
   erb :"user/result"
 end
 
