@@ -9,7 +9,7 @@ require_relative 'src/reader'
 ### Configure && Initialize ###
 
 configure do
-  set :food_input, {}
+  set :concentrations, {}
 end
 
 before do
@@ -39,7 +39,7 @@ get '/choice' do
 end
 
 get '/input_choice' do
-  puts "food_input: #{settings.food_input.clear}"
+  puts "concentrations: #{settings.concentrations.clear}"
   erb :"user/input_choice"
 end
 
@@ -55,8 +55,11 @@ end
 
 post '/result' do
   input_collector(params)
-  puts "food_input: #{settings.food_input}"
+  puts "concentrations: #{settings.concentrations}"
   redirect "/food_choice" if params["subject"] == "rechoose"
+  puts "### result ###"
+  @EDI = calc_edi
+  pp @EDI
   erb :"user/result"
 end
 
@@ -87,11 +90,29 @@ end
 
 def input_collector(params)
   food_name = params["food-kind"].to_sym
-  settings.food_input[food_name] = []
+  settings.concentrations[food_name] = []
 
   food_size = @food_list[food_name].size
 
   ("0"...food_size.to_s).each do |index|
-    settings.food_input[food_name] << params[index].to_f
+    settings.concentrations[food_name] << params[index].to_f
+  end
+end
+
+def calc_edi
+  result = {}
+  settings.concentrations.each do |food, concentration|
+    concentration.each_with_index do |c, i|
+      calc_by_age(result, food, c, i)
+    end
+  end
+  result
+end
+
+def calc_by_age(result, food, c, i)
+  @base_intake.each do |age, intake|
+    result[age] ||= {}
+    result[age][food] ||= []
+    result[age][food] << (intake[food][i] * c / 1_000).round(2)
   end
 end
