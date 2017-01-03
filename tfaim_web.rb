@@ -4,9 +4,6 @@ require 'sinatra/reloader'
 require 'tilt/erb'
 require 'pry'
 
-Dir[File.dirname(__FILE__) + '/Model/*'].each { |file| require_relative file }
-
-require_relative 'src/tfaim'
 require_relative 'src/reader'
 
 ### Configure && Initialize ###
@@ -16,9 +13,8 @@ configure do
 end
 
 before do
-  @tfaim = Tfaim.new
   @base_intake = Reader::intake
-  @food_list = food_list_init
+  @food_list   = Reader::food_list
 end
 
 ### Routing & Controller ###
@@ -88,27 +84,6 @@ get '/manager/data' do
 end
 
 ### Functions ####
-
-def food_list_init
-  food_list = {}
-  food_list[:milk]       = @tfaim.milk
-  food_list[:cream]      = @tfaim.cream
-  food_list[:ice]        = @tfaim.ice
-  food_list[:vegetable]  = @tfaim.vegetable
-  food_list[:dessert]    = @tfaim.dessert
-  food_list[:grain]      = @tfaim.grain
-  food_list[:baking]     = @tfaim.baking
-  food_list[:meat]       = @tfaim.meat
-  food_list[:seafood]    = @tfaim.seafood
-  food_list[:egg]        = @tfaim.egg
-  food_list[:sweat]      = @tfaim.sweat
-  food_list[:seasoning]  = @tfaim.seasoning
-  food_list[:nutritious] = @tfaim.nutritious
-  food_list[:drink]      = @tfaim.drink
-  food_list[:snack]      = @tfaim.snack
-  food_list[:meal]       = @tfaim.meal
-  food_list[:processed]  = @tfaim.processed
-end
 
 def input_collector(params)
   food_name = params["food-kind"].to_sym

@@ -12,7 +12,7 @@ module Reader
     :meat       => (141..172),
     :seafood    => (173..202),
     :egg        => (203..210),
-    :sweat      => (211..224),
+    :sweet      => (211..224),
     :seasoning  => (225..250),
     :nutritious => (251..259),
     :drink      => (260..279),
@@ -32,5 +32,21 @@ module Reader
       end
     end
     intake
+  end
+
+  def self.food_list
+    list = {}
+    FOOD_REF.each_key do |food|
+      list[food] = format_reader(food.to_s)
+    end
+    list
+  end
+
+  def self.format_reader(food)
+    array = []
+    File.open('assets/foods/' + food, 'r:UTF-8') do |f|
+      f.each_line { |line| array << line }
+    end
+    array
   end
 end
