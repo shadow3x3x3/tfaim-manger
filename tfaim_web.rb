@@ -92,6 +92,6 @@ def input_collector(params)
   food_size = @food_list[food_name].size
 
   ("0"...food_size.to_s).each do |index|
-    settings.food_input[food_name] << params[index]
+    settings.food_input[food_name] << params[index].to_f
   end
 end
