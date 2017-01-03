@@ -39,7 +39,7 @@ get '/choice' do
 end
 
 get '/input_choice' do
-  puts settings.food_input.clear
+  puts "food_input: #{settings.food_input.clear}"
   erb :"user/input_choice"
 end
 
@@ -55,7 +55,7 @@ end
 
 post '/result' do
   input_collector(params)
-  p settings.food_input
+  puts "food_input: #{settings.food_input}"
   redirect "/food_choice" if params["subject"] == "rechoose"
   erb :"user/result"
 end
