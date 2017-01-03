@@ -26,19 +26,11 @@ module Reader
     raw_intake = CSV.read('ref/base.csv', :headers=>true)
     raw_intake.headers.each do |age_class|
       age = age_class.to_sym
-      # init_intake(intake, age)
       intake[age] ||= {}
       FOOD_REF.each do |food, indexs|
         intake[age][food] ||= raw_intake[age_class][indexs].map!(&:to_f)
       end
     end
     intake
-  end
-
-  def self.init_intake(intake, age)
-    intake[age] ||= {}
-    FOOD_REF.each_key do |food|
-      intake[age][food] ||= []
-    end
   end
 end
