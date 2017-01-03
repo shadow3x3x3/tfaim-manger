@@ -106,6 +106,8 @@ def calc_edi
       calc_by_age(result, food, c, i)
     end
   end
+  age_class = ['kid', 'child', 'teenager', 'adult', 'older']
+  age_class.each { |age| calc_statistics(result, age) }
   result
 end
 
@@ -115,4 +117,59 @@ def calc_by_age(result, food, c, i)
     result[age][food] ||= []
     result[age][food] << (intake[food][i] * c / 1_000).round(2)
   end
+end
+
+def calc_statistics(result, age)
+  p age
+  if age != 'kid'
+    # male
+    index = get_max_intake(result, "#{age}_male_co")
+    get_max_intake(result, "#{age}_male_wg")
+    get_wg_exposure(result, "#{age}_male_wg")
+    get_relative_max(result, "#{age}_male", index)
+    get_co_exposure(result, "#{age}_male")
+    # female
+    index = get_max_intake(result, "#{age}_female_co")
+    get_max_intake(result, "#{age}_female_wg")
+    get_wg_exposure(result, "#{age}_female_wg")
+    get_relative_max(result, "#{age}_female", index)
+    get_co_exposure(result, "#{age}_female")
+    # full
+    index = get_max_intake(result, "#{age}_full_co")
+    get_max_intake(result, "#{age}_full_wg")
+    get_wg_exposure(result, "#{age}_full_wg")
+    get_relative_max(result, "#{age}_full", index)
+    get_co_exposure(result, "#{age}_full")
+  else
+    index = get_max_intake(result, "#{age}_co")
+    get_max_intake(result, "#{age}_wg")
+    get_wg_exposure(result, "#{age}_wg")
+    get_relative_max(result, age, index)
+    get_co_exposure(result, age)
+  end
+end
+
+def get_max_intake(result, key)
+  full_food = []
+  result[key.to_sym].each { |_, values| full_food.concat(values) }
+  result["#{key}_max".to_sym] = full_food.max
+  full_food.index(full_food.max)
+end
+
+def get_wg_exposure(result, key)
+  result["#{key}_exposure".to_sym] = result[key.to_sym].inject(0) do
+    |s, values| s += values[1].inject(:+)
+  end
+end
+
+def get_relative_max(result, age, index)
+  full_food = []
+  result["#{age}_wg".to_sym].each { |_, values| full_food.concat(values) }
+  result["#{age}_relative".to_sym] = full_food[index]
+end
+
+def get_co_exposure(result, key)
+  result["#{key}_co_exposure".to_sym] = result["#{key}_wg_exposure".to_sym] +
+    result["#{key}_co_max".to_sym] -
+    result["#{key}_relative".to_sym]
 end
