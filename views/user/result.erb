@@ -23,8 +23,13 @@
         </ul>
       </div>
     </div>
-    <div id="EDI"></div>
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <div id="EDI">
+      <canvas id="EDIChart" width="400" height="200"></canvas>
+    </div>
+
+    <div id="PIE">
+      <canvas id="EDIPie" width="400" height="200"></canvas>
+    </div>
 
     <table class="table table-striped">
       <tr>
@@ -38,13 +43,12 @@
       </tr>
       <% end %>
     </table>
-
   </div>
 </div>
 
 <script>
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
+var chartId = document.getElementById('EDIChart');
+var EDIChart = new Chart(chartId, {
   type: 'bar',
   data: {
     labels: ["幼兒", "孩童", "青少年", "成年人", "老年人"],
@@ -79,6 +83,37 @@ var myChart = new Chart(ctx, {
       }]
     },
     barValueSpacing: 20
+  }
+});
+
+var pieID = document.getElementById('EDIPie');
+
+var EDIPie = new Chart(pieID, {
+    type: 'pie',
+    data: {
+      labels: ["幼兒", "孩童", "青少年", "成年人", "老年人"],
+      datasets: [
+        {
+          data: <%= @EDI_full %>,
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#0cd327",
+            "#bc0cd3"
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#0cd327",
+            "#bc0cd3"
+          ]
+        }
+      ]
+    },
+  options: {
+    responsive: true
   }
 });
 </script>
