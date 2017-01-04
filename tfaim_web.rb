@@ -60,7 +60,9 @@ post '/result' do
   puts "### result ###"
   @EDI = calc_edi
   @EDI_male, @EDI_female, @EDI_full = edi_chart(@EDI)
-  p @EDI
+  @table_hash = table_setting(settings.concentrations, @food_list)
+  pp @table_hash
+  # p @food_list
   erb :"user/result"
 end
 
@@ -190,4 +192,12 @@ def edi_chart(result)
       @EDI[:older_full_co_exposure]
     ].to_s
   ]
+end
+
+def table_setting(cs, food_list)
+  values = {}
+  cs.each do |f, c|
+    food_list[f].each_with_index { |l, i| values[l] = c[i] }
+  end
+  values
 end

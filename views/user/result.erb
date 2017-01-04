@@ -26,6 +26,19 @@
     <div id="EDI"></div>
     <canvas id="myChart" width="400" height="200"></canvas>
 
+    <table class="table table-striped">
+      <tr>
+        <td>項目</td>
+        <td>濃度(單位: mg/kg – mg/L)</td>
+      </tr>
+      <% @table_hash.each do |list, value| %>
+      <tr>
+        <td><%= list %></td>
+        <td><%= value %></td>
+      </tr>
+      <% end %>
+    </table>
+
   </div>
 </div>
 
