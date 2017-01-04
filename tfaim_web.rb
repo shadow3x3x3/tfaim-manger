@@ -61,8 +61,6 @@ post '/result' do
   @EDI = calc_edi
   @EDI_male, @EDI_female, @EDI_full = edi_chart(@EDI)
   @table_hash = table_setting(settings.concentrations, @food_list)
-  pp @table_hash
-  # p @food_list
   erb :"user/result"
 end
 
