@@ -59,7 +59,8 @@ post '/result' do
   redirect "/food_choice" if params["subject"] == "rechoose"
   puts "### result ###"
   @EDI = calc_edi
-  pp @EDI
+  @EDI_male, @EDI_female, @EDI_full = edi_chart(@EDI)
+  p @EDI
   erb :"user/result"
 end
 
@@ -120,7 +121,6 @@ def calc_by_age(result, food, c, i)
 end
 
 def calc_statistics(result, age)
-  p age
   if age != 'kid'
     # male
     index = get_max_intake(result, "#{age}_male_co")
@@ -169,7 +169,25 @@ def get_relative_max(result, age, index)
 end
 
 def get_co_exposure(result, key)
-  result["#{key}_co_exposure".to_sym] = result["#{key}_wg_exposure".to_sym] +
+  result["#{key}_co_exposure".to_sym] = (result["#{key}_wg_exposure".to_sym] +
     result["#{key}_co_max".to_sym] -
-    result["#{key}_relative".to_sym]
+    result["#{key}_relative".to_sym]).round(2)
+end
+
+def edi_chart(result)
+  [
+    [
+      0, @EDI[:child_male_co_exposure],
+      @EDI[:teenager_male_co_exposure], @EDI[:adult_male_co_exposure],
+      @EDI[:older_male_co_exposure]
+    ].to_s, [
+      0, @EDI[:child_female_co_exposure],
+      @EDI[:teenager_female_co_exposure], @EDI[:adult_female_co_exposure],
+      @EDI[:older_female_co_exposure]
+    ].to_s, [
+      @EDI[:kid_co_exposure], @EDI[:child_full_co_exposure],
+      @EDI[:teenager_full_co_exposure], @EDI[:adult_full_co_exposure],
+      @EDI[:older_full_co_exposure]
+    ].to_s
+  ]
 end

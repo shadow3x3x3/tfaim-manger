@@ -1,27 +1,71 @@
 <div id="page-wrapper">
   <div class="container">
     <h1><center>計算結果</center></h1>
-    <div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="Justified button group"> 
+    <div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
       <a href="#" class="btn btn-default">
         暴露評估EDI
       </a>
       <a href="#" class="btn btn-default">
         風險評估%ADI
       </a>
-      <div class="btn-group btn-group-lg" role="group"> 
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
-          貢獻百分比 <span class="caret"></span> 
-        </button> 
-        <ul class="dropdown-menu btn-group-lg" role="menu"> 
-          <li><a href="#">嬰兒(0-11月)</a></li> 
-          <li><a href="#">幼兒(12-35月)</a></li> 
-          <li><a href="#">孩童(3-9歲)</a></li> 
-          <li><a href="#">青少年(10-17歲)</a></li> 
+      <div class="btn-group btn-group-lg" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          貢獻百分比 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu btn-group-lg" role="menu">
+          <li><a href="#">嬰兒(0-11月)</a></li>
+          <li><a href="#">幼兒(12-35月)</a></li>
+          <li><a href="#">孩童(3-9歲)</a></li>
+          <li><a href="#">青少年(10-17歲)</a></li>
           <li><a href="#">成年人(18-64歲)</a></li>
-          <li><a href="#">老年人(65-75歲)</a></li> 
-          <li><a href="#">高齡老年人(75+歲)</a></li> 
-        </ul> 
+          <li><a href="#">老年人(65-75歲)</a></li>
+          <li><a href="#">高齡老年人(75+歲)</a></li>
+        </ul>
       </div>
     </div>
+    <div id="EDI"></div>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
   </div>
 </div>
+
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ["幼兒", "孩童", "青少年", "成年人", "老年人"],
+    datasets: [{
+      label: "男",
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1,
+      data: <%= @EDI_male %>
+    },
+    {
+      label: "女",
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      borderWidth: 1,
+      data: <%= @EDI_female %>
+    },
+    {
+      label: "全體",
+      backgroundColor: 'rgba(255, 206, 86, 0.2)',
+      borderColor: 'rgba(255, 206, 86, 1)',
+      borderWidth: 1,
+      data: <%= @EDI_full %>
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    },
+    barValueSpacing: 20
+  }
+});
+</script>
