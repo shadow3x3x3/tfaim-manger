@@ -10,6 +10,7 @@ require_relative 'src/reader'
 
 configure do
   set :concentrations, {}
+  set :additives, nil
 end
 
 before do
@@ -40,6 +41,7 @@ end
 
 post '/input_choice' do
   puts "concentrations: #{settings.concentrations.clear}"
+  settings.additives = params['additives']
   puts "additives: #{params['additives']}"
   erb :"user/input_choice"
 end
@@ -60,7 +62,7 @@ post '/result' do
   redirect "/food_choice" if params["subject"] == "rechoose"
   puts "### result ###"
   @EDI = calc_edi
-  @EDI_male, @EDI_female, @EDI_full = edi_chart(@EDI)
+  @EDI_male, @EDI_female, @EDI_full = edi_chart
   @table_hash = table_setting(settings.concentrations, @food_list)
   erb :"user/result"
 end
@@ -175,7 +177,7 @@ def get_co_exposure(result, key)
     result["#{key}_relative".to_sym]).round(2)
 end
 
-def edi_chart(result)
+def edi_chart
   [
     [
       0, @EDI[:child_male_co_exposure],
