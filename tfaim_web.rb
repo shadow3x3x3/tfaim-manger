@@ -38,8 +38,9 @@ get '/choice' do
   erb :"user/choice"
 end
 
-get '/input_choice' do
+post '/input_choice' do
   puts "concentrations: #{settings.concentrations.clear}"
+  puts "additives: #{params['additives']}"
   erb :"user/input_choice"
 end
 

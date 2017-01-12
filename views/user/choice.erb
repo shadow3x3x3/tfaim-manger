@@ -7,24 +7,18 @@
 .food-button {
   font-size: 24px;
 }
-
-.btn {
-  margin: 10px;
-}
 </style>
 
 <div id="page-wrapper">
   <div class="container-fluid">
-    <h1>選擇添加物</h1>
-    <div class="row">
-      <a href="/input_choice" class="btn btn-default food-button">苯甲酸</a>
-      <a href="/input_choice" class="btn btn-default food-button">己二烯酸</a>  
-      <a href="/input_choice" class="btn btn-default food-button">丙酸</a>
-    </div>
-    <div class="row">
-      <a href="/input_choice" class="btn btn-default food-button">磷酸鈉</a>
-      <a href="/input_choice" class="btn btn-default food-button">甜菊糖</a>
-      <a href="/input_choice" class="btn btn-default food-button">糖精</a>      
-    </div>
+    <h1>輸入添加物ADI (mg/kg-bw/day)</h1>
+    <form action="/input_choice" class="form foods-form" method="post" role="form">
+      <div class="form-group">
+        <div class="col-md-4">
+          <input type="number" value="0" min=0 name="additives" class="form-control" step="0.01">
+        </div>
+          <button type="submit" class="btn btn-primary" name="subject" value="next">下一步</button>
+      </div>
+    </form>
   </div>
 </div>
