@@ -2,33 +2,21 @@
   <div class="container">
     <h1><center>計算結果</center></h1>
     <div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
-      <a href="#" class="btn btn-default">
+      <a href="#" class="btn btn-default" onclick="showChart('EDI')">
         暴露評估EDI
       </a>
-      <a href="#" class="btn btn-default">
+      <a href="#" class="btn btn-default" onclick="showChart('ADI')">
         風險評估%ADI
       </a>
-      <div class="btn-group btn-group-lg" role="group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          貢獻百分比 <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu btn-group-lg" role="menu">
-          <li><a href="#">嬰兒(0-11月)</a></li>
-          <li><a href="#">幼兒(12-35月)</a></li>
-          <li><a href="#">孩童(3-9歲)</a></li>
-          <li><a href="#">青少年(10-17歲)</a></li>
-          <li><a href="#">成年人(18-64歲)</a></li>
-          <li><a href="#">老年人(65-75歲)</a></li>
-          <li><a href="#">高齡老年人(75+歲)</a></li>
-        </ul>
-      </div>
     </div>
     <div id="EDI">
       <canvas id="EDIChart" width="400" height="200"></canvas>
+      <canvas id="EDIPie" width="400" height="200"></canvas>
     </div>
 
-    <div id="PIE">
-      <canvas id="EDIPie" width="400" height="200"></canvas>
+    <div id="ADI" hidden>
+      <canvas id="ADIChart" width="400" height="200"></canvas>
+      <canvas id="ADIPie" width="400" height="200"></canvas>
     </div>
 
     <table class="table table-striped">
@@ -47,6 +35,19 @@
 </div>
 
 <script>
+function showChart(type) {
+  switch(type) {
+    case 'EDI':
+      document.getElementById('EDI').style.display = 'block'
+      document.getElementById('ADI').style.display = 'none'
+    break;
+    case 'ADI':
+      document.getElementById('EDI').style.display = 'none'
+      document.getElementById('ADI').style.display = 'block'
+    break;
+  }
+}
+
 var chartId = document.getElementById('EDIChart');
 var EDIChart = new Chart(chartId, {
   type: 'bar',
@@ -86,6 +87,45 @@ var EDIChart = new Chart(chartId, {
   }
 });
 
+var chartId = document.getElementById('ADIChart');
+var ADIChart = new Chart(chartId, {
+  type: 'bar',
+  data: {
+    labels: ["幼兒", "孩童", "青少年", "成年人", "老年人"],
+    datasets: [{
+      label: "男",
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1,
+      data: <%= @ADI_male %>
+    },
+    {
+      label: "女",
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      borderWidth: 1,
+      data: <%= @ADI_female %>
+    },
+    {
+      label: "全體",
+      backgroundColor: 'rgba(255, 206, 86, 0.2)',
+      borderColor: 'rgba(255, 206, 86, 1)',
+      borderWidth: 1,
+      data: <%= @ADI_full %>
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    },
+    barValueSpacing: 20
+  }
+});
+
 var pieID = document.getElementById('EDIPie');
 
 var EDIPie = new Chart(pieID, {
@@ -95,6 +135,37 @@ var EDIPie = new Chart(pieID, {
       datasets: [
         {
           data: <%= @EDI_full %>,
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#0cd327",
+            "#bc0cd3"
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#0cd327",
+            "#bc0cd3"
+          ]
+        }
+      ]
+    },
+  options: {
+    responsive: true
+  }
+});
+
+var pieID = document.getElementById('ADIPie');
+
+var ADIPie = new Chart(pieID, {
+    type: 'pie',
+    data: {
+      labels: ["幼兒", "孩童", "青少年", "成年人", "老年人"],
+      datasets: [
+        {
+          data: <%= @ADI_full %>,
           backgroundColor: [
             "#FF6384",
             "#36A2EB",

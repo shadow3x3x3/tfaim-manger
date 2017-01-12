@@ -41,8 +41,8 @@ end
 
 post '/input_choice' do
   puts "concentrations: #{settings.concentrations.clear}"
-  settings.additives = params['additives']
-  puts "additives: #{params['additives']}"
+  settings.additives = params['additives'].to_f
+  puts "additives: #{settings.additives}"
   erb :"user/input_choice"
 end
 
@@ -63,6 +63,7 @@ post '/result' do
   puts "### result ###"
   @EDI = calc_edi
   @EDI_male, @EDI_female, @EDI_full = edi_chart
+  @ADI_male, @ADI_female, @ADI_full = adi_chart
   @table_hash = table_setting(settings.concentrations, @food_list)
   erb :"user/result"
 end
@@ -191,6 +192,30 @@ def edi_chart
       @EDI[:kid_co_exposure], @EDI[:child_full_co_exposure],
       @EDI[:teenager_full_co_exposure], @EDI[:adult_full_co_exposure],
       @EDI[:older_full_co_exposure]
+    ].to_s
+  ]
+end
+
+def adi_chart
+  [
+    [
+      0,
+      @EDI[:child_male_co_exposure] / settings.additives * 100,
+      @EDI[:teenager_male_co_exposure] / settings.additives * 100,
+      @EDI[:adult_male_co_exposure] / settings.additives * 100,
+      @EDI[:older_male_co_exposure] / settings.additives * 100
+    ].to_s, [
+      0,
+      @EDI[:child_female_co_exposure] / settings.additives * 100,
+      @EDI[:teenager_female_co_exposure] / settings.additives * 100,
+      @EDI[:adult_female_co_exposure] / settings.additives * 100,
+      @EDI[:older_female_co_exposure] / settings.additives * 100
+    ].to_s, [
+      @EDI[:kid_co_exposure]  / settings.additives * 100,
+      @EDI[:child_full_co_exposure]  / settings.additives * 100,
+      @EDI[:teenager_full_co_exposure]  / settings.additives * 100,
+      @EDI[:adult_full_co_exposure] / settings.additives * 100,
+      @EDI[:older_full_co_exposure] / settings.additives * 100
     ].to_s
   ]
 end
